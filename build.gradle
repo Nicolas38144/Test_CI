@@ -1,0 +1,68 @@
+plugins {
+    id 'java'
+    id 'io.quarkus'
+    id "org.sonarqube" version "4.4.1.3373"
+    id 'jacoco'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", "projet23"
+        property "sonar.token", "sqp_2c32828fbcfb016a1aeefc06acba205bf4b9eb61"
+        property "sonar.projectName", "projet23"
+        property "sonar.qualitygate.wait", true
+        property "sonar.host.url", "https://sonar.home.lange.xyz"
+        tasks.jacocoTestReport.configure {
+            property("sonar.coverage.jacoco.xmlReportPaths", ["build/reports/jacoco/test/jacocoTestReport.xml"])
+        }
+    }
+}
+
+dependencies {
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation 'io.quarkus:quarkus-resteasy-reactive'
+    implementation 'io.quarkus:quarkus-arc'
+    testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'io.rest-assured:rest-assured'
+    testImplementation "io.quarkus:quarkus-jacoco"
+}
+
+group 'org.acme'
+version '1.0.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+test {
+    systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
+    finalizedBy jacocoTestReport
+    jacoco {
+        excludeClassLoaders = ["*QuarkusClassLoader"]
+        destinationFile = layout.buildDirectory.file("jacoco-quarkus.exec").get().asFile
+    }
+    jacocoTestReport.enabled = true
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        csv.required = true
+        html.required = true
+    }
+}
