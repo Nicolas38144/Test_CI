@@ -2,77 +2,90 @@ package org.acme;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.enterprise.inject.Instance;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Simulator {
-    private Game game;
+    private Map map;
+    private Player player;
     private boolean running;
-    private final int updateIntervalMillis;
+    private List<PoliceVehicle> policeVehicles;
 
-    private Simulator simulator;
-
-    public Simulator(Game game, int updateIntervalMillis) {
-        this.game = game;
-        this.updateIntervalMillis = updateIntervalMillis;
+    public Simulator(Map map, Player player, Instance<PoliceVehicle> policeVehicles) {
+        this.map = map;
+        this.player = player;
         this.running = false;
+        this.policeVehicles = new ArrayList<>();
+        policeVehicles.forEach(this::addPoliceVehicle);
     }
 
     public void start() {
         running = true;
-        new Thread(() -> {
-            while (running) {
-                update();
-                try {
-                    Thread.sleep(updateIntervalMillis);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+        gameLoop();
     }
 
     public void stop() {
         running = false;
     }
 
-    @PostConstruct
-    public void startSimulator() {
-        simulator.start();
-    }
-
-    @PreDestroy
-    public void stopSimulator() {
-        simulator.stop();
-    }
-
-    public void updateVehiclePositions() {
-        // Mettre à jour la position des véhicules en fonction des entrées utilisateur et des règles du jeu
-    }
-
-    public void handleCollisionsAndEvents() {
-        // Vérifier et gérer les collisions entre les véhicules et les objets du jeu
-        // Vérifier et gérer d'autres événements du jeu (par exemple, le joueur entre dans un garage)
-    }
-
-    public void updatePoliceVehiclePositions() {
-        // Mettre à jour la position des véhicules de police en fonction de leur comportement et des règles du jeu
-    }
-
-    public void spawnNewObjects() {
-        // Générer de nouveaux objets (pièces, véhicules de police, etc.) à des intervalles aléatoires ou en fonction des règles du jeu
-        // Utilise ThreadLocalRandom pour générer des nombres aléatoires
+    private void gameLoop() {
+        while (running) {
+            update();
+            try {
+                Thread.sleep(100); // Attendre 100 millisecondes entre chaque mise à jour
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void update() {
-        // Mettre à jour la position des véhicule
-        updateVehiclePositions();
+        // Mettre à jour la position du véhicule du joueur en fonction des requêtes API
+        player.updatePosition();
 
-        // Gérer les collisions et autres événements du jeu
-        handleCollisionsAndEvents();
+        // Mettre à jour la position des véhicules de police en fonction de leur comportement aléatoire
+        for (PoliceVehicle policeVehicle : policeVehicles) {
+            policeVehicle.updatePosition();
+        }
 
-        // Mettre à jour la position des véhicules de police
-        updatePoliceVehiclePositions();
+        // Vérifier les collisions entre le véhicule du joueur et les bâtiments, les pièces, les véhicules de police, etc.
+        checkCollisions();
 
-        // Générer de nouveaux objets (pièces, véhicules de police, etc.) si nécessaire
-        spawnNewObjects();
+        // Mettre à jour l'interface utilisateur pour refléter l'état actuel du jeu
+        // ...
+    }
+
+    private void checkCollisions() {
+        // Vérifier les collisions avec les bâtiments
+        Building building = map.getBuildingAt(player.getVehicle().getX(), player.getVehicle().getY());
+        if (building != null) {
+            // Gérer la collision avec le bâtiment
+        }
+
+        // Vérifier les collisions avec les stations-service
+        GasStation gasStation = map.getGasStationAt(player.getVehicle().getX(), player.getVehicle().getY());
+        if (gasStation != null) {
+            // Gérer la collision avec la station-service
+        }
+
+        // Vérifier les collisions avec les garages
+        Garage garage = map.getGarageAt(player.getVehicle().getX(), player.getVehicle().getY());
+        if (garage != null) {
+            // Gérer la collision avec le garage
+        }
+
+        // Vérifier les collisions avec les pièces
+        Coin coin = map.getCoinAt(player.getVehicle().getX(), player.getVehicle().getY());
+        if (coin != null) {
+            // Gérer la collision avec la pièce
+        }
+
+        // Vérifier les collisions avec les véhicules de police
+        for (PoliceVehicle policeVehicle : policeVehicles) {
+            if (player.getVehicle().collidesWith(policeVehicle)) {
+                // Gérer la collision avec le véhicule de police
+            }
+        }
     }
 }

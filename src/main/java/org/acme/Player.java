@@ -1,99 +1,75 @@
-package org.acme.model;
+package org.acme;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import org.acme.Game;
-import org.acme.Vehicle;
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
 public class Player {
-    private final Game game;
-
     private int id;
-    private String name;
+    private Vehicle vehicle;
     private int money;
     private List<Vehicle> garage;
-    private Vehicle currentVehicle;
 
-    public Player(Game game, int id, String name, int money, List<Vehicle> garage, Vehicle currentVehicle) {
-        this.game = game;
+    public Player(int id, Vehicle vehicle, int money) {
         this.id = id;
-        this.name = name;
+        this.vehicle = vehicle;
         this.money = money;
-        this.garage = garage;
-        this.currentVehicle = currentVehicle;
+        this.garage = new ArrayList<>();
     }
 
-    public Player(Game game) {
-        this.game = game;
+    public Player() {
+        this.garage = new ArrayList<>();
     }
 
-    public Player getPlayer() {
-        return game.getPlayer();
-    }
-
-    public void updateMoney(int amount) {
-        // Mettre à jour l'argent du joueur en ajoutant ou en soustrayant le montant spécifié
-        this.money += amount;
-    }
-
-    public void updateFuel(int amount) {
-        // Mettre à jour le carburant du véhicule du joueur en ajoutant ou en soustrayant le montant spécifié
-        this.currentVehicle.setCurrentFuel(this.currentVehicle.getCurrentFuel() + amount);
-    }
-
-    public void updateLives(int amount) {
-        // Mettre à jour les vies du joueur en ajoutant ou en soustrayant le montant spécifié
-    }
-
-    // Getters and setters
-
-    public int getId() {
+    public int getID() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String setName(String name) {
-        this.name = name;
-        return name;
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
     public int getMoney() {
         return money;
     }
 
-    public int setMoney(int money) {
-        this.money = money;
-        return money;
+    public void addMoney(int amount) {
+        this.money += amount;
+    }
+
+    public void spendMoney(int amount) {
+        this.money -= amount;
     }
 
     public List<Vehicle> getGarage() {
         return garage;
     }
 
-    public List<Vehicle> setGarage(List<Vehicle> garage) {
-        this.garage = garage;
-        return garage;
+    public void addVehicleToGarage(Vehicle vehicle) {
+        garage.add(vehicle);
     }
 
-    public Vehicle getCurrentVehicle() {
-        return currentVehicle;
+    public void removeVehicleFromGarage(Vehicle vehicle) {
+        garage.remove(vehicle);
     }
 
-    public Vehicle setCurrentVehicle(Vehicle currentVehicle) {
-        this.currentVehicle = currentVehicle;
-        return currentVehicle;
+    public void buyVehicle(Vehicle vehicle) {
+        if (money >= vehicle.getPrice()) {
+            money -= vehicle.getPrice();
+            garage.add(vehicle);
+        }
     }
 
-    public void addVehicle(Vehicle vehicle) {
-        this.garage.add(vehicle);
+    public void moveVehicle() {
+
+    }
+
+    public void updatePosition() {
     }
 }

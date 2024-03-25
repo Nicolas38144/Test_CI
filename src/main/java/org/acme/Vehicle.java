@@ -7,135 +7,90 @@ import javax.inject.Inject;
 
 @ApplicationScoped
 public class Vehicle {
-    private final Game game;
-
     private int id;
-    private String brand;
-    private String model;
-    private int fuelTankCapacity;
-    private int resistance;
-    private int currentFuel;
-    private int money;
+    private int x;
+    private int y;
+    private int height;
+    private int width;
 
-    @Inject
-    public Vehicle(Game game) {
-        this.game = game;
-    }
+    private int price;
+    private int fuel;
+    private int fuelCapacity;
 
-    public Vehicle(Game game, int id, String brand, String model, int fuelTankCapacity, int resistance, int currentFuel, int money) {
-        this.game = game;
+    public Vehicle(int id, int x, int y, int height, int width, int fuelCapacity) {
         this.id = id;
-        this.brand = brand;
-        this.model = model;
-        this.fuelTankCapacity = fuelTankCapacity;
-        this.resistance = resistance;
-        this.currentFuel = currentFuel;
-        this.money = money;
+        this.x = x;
+        this.y = y;
+        this.height = height;
+        this.width = width;
+        this.fuel = fuelCapacity;
+        this.fuelCapacity = fuelCapacity;
     }
 
-    public List<Vehicle> getVehicles() {
-        return game.getPlayer().getGarage();
-    }
-
-    public Vehicle getVehicleById(int vehicleId) {
-        return game.getPlayer().getGarage().stream().filter(vehicle -> vehicle.getId() == vehicleId).findFirst().orElse(null);
-    }
-
-    public void buyVehicle(int vehicleId) {
-        Vehicle vehicleToBuy = getVehicleById(vehicleId);
-
-        if (vehicleToBuy != null && game.getPlayer().getMoney() >= vehicleToBuy.getPrice()) {
-            game.getPlayer().setMoney(game.getPlayer().getMoney() - vehicleToBuy.getPrice());
-            game.getPlayer().getGarage().add(vehicleToBuy);
-        }
-    }
-
-    public void setCurrentVehicle(int vehicleId) {
-        Vehicle currentVehicle = getVehicleById(vehicleId);
-
-        if (currentVehicle != null) {
-            game.getPlayer().setCurrentVehicle(currentVehicle);
-        }
-    }
-
-    // Getters and setters
-
-    public int getId() {
+    public int getID() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getX() {
+        return x;
     }
 
-    public String getBrand() {
-        return brand;
+    public int getY() {
+        return y;
     }
 
-    public String setBrand(String brand) {
-        this.brand = brand;
-        return brand;
+    public int getFuel() {
+        return fuel;
     }
 
-    public String getModel() {
-        return model;
+    public int getFuelCapacity() {
+        return fuelCapacity;
     }
 
-    public String setModel(String model) {
-        this.model = model;
-        return model;
+    public void move(int dx, int dy) {
+        if (fuel > 0) {
+            x += dx;
+            y += dy;
+            fuel -= Math.abs(dx) + Math.abs(dy);
+        }
     }
 
-    public int getFuelTankCapacity() {
-        return fuelTankCapacity;
+    public void refuel() {
+        fuel = fuelCapacity;
     }
 
-    public int setFuelTankCapacity(int fuelTankCapacity) {
-        this.fuelTankCapacity = fuelTankCapacity;
-        return fuelTankCapacity;
+    public int getWidth() {
+        return width;
     }
 
-    public int getResistance() {
-        return resistance;
+    public void setWidth(int width) {
+        this.width = width;
     }
 
-    public int setResistance(int resistance) {
-        this.resistance = resistance;
-        return resistance;
+    public int getHeight() {
+        return height;
     }
 
-    public int getCurrentFuel() {
-        return currentFuel;
-    }
-
-    public int setCurrentFuel(int currentFuel) {
-        this.currentFuel = currentFuel;
-        return currentFuel;
-    }
-
-    public int getMoney() {
-        return money;
-    }
-
-    public int setMoney(int money) {
-        this.money = money;
-        return money;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public int getPrice() {
-        return money;
+        return price;
     }
 
-    @Override
-    public String toString() {
-        return "Vehicle{" +
-                "id=" + id +
-                ", brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", fuelTankCapacity=" + fuelTankCapacity +
-                ", resistance=" + resistance +
-                ", currentFuel=" + currentFuel +
-                ", money=" + money +
-                '}';
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public boolean collidesWith(PoliceVehicle policeVehicle) {
+
+        int policeX = policeVehicle.getX();
+        int policeY = policeVehicle.getY();
+        int policeWidth = policeVehicle.getWidth();
+        int policeHeight = policeVehicle.getHeight();
+
+        return (x < policeX + policeWidth && x + width > policeX && y < policeY + policeHeight && y + height > policeY);
     }
 }
+

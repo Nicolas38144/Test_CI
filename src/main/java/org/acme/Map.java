@@ -3,50 +3,78 @@ package org.acme;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Map {
-    private int largeurEntite;
-    private int hauteurEntite;
-    private List<int[]> buildingPositions = new ArrayList<>();
-    private List<int[]> coinPositions = new ArrayList<>();
-    private List<int[]> stationPositions = new ArrayList<>();
-    private int[] garagePosition;
+    private List<Building> buildings;
+    private List<GasStation> gasStations;
+    private List<Garage> garages;
+    private List<Coin> coins;
+    private List<PoliceVehicle> policeVehicles;
 
     public Map() {
-
-        buildingPositions.add(new int[] { 400, 90 });
-        buildingPositions.add(new int[] { 100, 100 });
-        buildingPositions.add(new int[] { 450, 150 });
-        buildingPositions.add(new int[] { 200, 190 });
-        buildingPositions.add(new int[] { 200, 100 });
-        buildingPositions.add(new int[] { 450, 250 });
-
-        coinPositions.add(new int[] { 300, 120 });
-        coinPositions.add(new int[] { 150, 200 });
-        coinPositions.add(new int[] { 500, 220 });
-
-        stationPositions.add(new int[] { 200, 250 });
-        stationPositions.add(new int[] { 100, 200 });
-
-        garagePosition = new int[] { 0, 0 }; // Définissez la position du garage ici
+        buildings = new ArrayList<>();
+        gasStations = new ArrayList<>();
+        garages = new ArrayList<>();
+        coins = new ArrayList<>();
     }
 
-    public List<int[]> getBuildingPositions() {
-        return buildingPositions;
+    public void addBuilding(Building building) {
+        buildings.add(building);
     }
 
-    public List<int[]> getCoinPositions() {
-        return coinPositions;
+    public void addGasStation(GasStation gasStation) {
+        gasStations.add(gasStation);
     }
 
-    public List<int[]> getStationPositions() {
-        return stationPositions;
+    public void addGarage(Garage garage) {
+        garages.add(garage);
     }
 
-    public int[] getGaragePosition() {
-        return garagePosition;
+    public void addCoin(Coin coin) {
+        coins.add(coin);
     }
 
-    public Object getRandomPosition() {
-        return new int[] { 0, 0 }; // Retourne une position aléatoire
+
+
+    public Building getBuildingAt(int x, int y) {
+        for (Building building : buildings) {
+            if (building.contains(x, y)) {
+                return building;
+            }
+        }
+        return null;
+    }
+
+    public GasStation getGasStationAt(int x, int y) {
+        for (GasStation gasStation : gasStations) {
+            if (gasStation.contains(x, y)) {
+                return gasStation;
+            }
+        }
+        return null;
+    }
+
+    public Garage getGarageAt(int x, int y) {
+        for (Garage garage : garages) {
+            if (garage.contains(x, y)) {
+                return garage;
+            }
+        }
+        return null;
+    }
+
+    public Coin getCoinAt(int x, int y) {
+        for (Coin coin : coins) {
+            if (coin.contains(x, y)) {
+                return coin;
+            }
+        }
+        return null;
+    }
+
+    public void addPoliceVehicle(PoliceVehicle policeVehicle) {
+        policeVehicles.add(policeVehicle);
     }
 }

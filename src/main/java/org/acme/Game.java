@@ -1,109 +1,70 @@
-package org.acme;
+import org.acme.*;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import org.acme.Simulator;
-import org.acme.model.Player;
-import org.acme.PoliceVehicle;
-import org.acme.Coin;
-
+import java.util.ArrayList;
 import java.util.List;
-import javax.inject.Inject;
 
-@ApplicationScoped
 public class Game {
-    private Player player;
     private Map map;
-    private List<PoliceVehicle> policeVehicles;
-    private List<Coin> coins;
-    private boolean isRunning;
-    private final Simulator simulator;
-    private final PlayerService playerService;
-    private final VehicleService vehicleService;
-    private final CoinService coinService;
+    private Player player;
+    private Simulator simulator;
+    private List<Vehicle> availableCars;
 
-    @Inject
-    public Game(Simulator simulator, PlayerService playerService, VehicleService vehicleService, CoinService coinService) {
-        this.simulator = simulator;
-        this.playerService = playerService;
-        this.vehicleService = vehicleService;
-        this.coinService = coinService;
+    public Game() {
+        // Créer la carte, le joueur et le simulateur
+        map = new Map();
+        player = new Player();
+        simulator = new Simulator(map, player);
+
+        // Initialiser les véhicules
+        initializeVehicles();
     }
 
-    public Game(Player player, Map map, Simulator simulator, PlayerService playerService, VehicleService vehicleService, CoinService coinService) {
-        this.player = player;
-        this.map = map;
-        this.simulator = simulator;
-        this.playerService = playerService;
-        this.vehicleService = vehicleService;
-        this.coinService = coinService;
-        this.isRunning = true;
-        this.policeVehicles = initializePoliceVehicles();
-        this.coins = initializeCoins();
+    private void initializeVehicles() {
+        // Créer les trois véhicules
+        Vehicle basicCar = new Vehicle(1, 0, 0, 50, 50, 50);
+        basicCar.setPrice(10);
+        Vehicle mediumCar = new Vehicle(2, 0, 0, 75, 75, 100);
+        mediumCar.setPrice(20);
+        Vehicle premiumCar = new Vehicle(3, 0, 0, 100, 100, 200);
+        premiumCar.setPrice(30);
+
+        // Ajouter la voiture de base au garage du joueur
+        player.getGarage().add(basicCar);
+
+        // Ajouter les deux autres voitures à la liste de voitures disponibles à l'achat
+        availableCars = new ArrayList<>();
+        availableCars.add(mediumCar);
+        availableCars.add(premiumCar);
     }
 
-    public Player getPlayer() {
-        return player;
+    public List<Vehicle> getAvailableCars() {
+        return availableCars;
     }
 
-    public Map getMap() {
-        return map;
-    }
+    public void start() {
+        // Ajouter des stations-service à la carte
+        GasStation gasStation1 = new GasStation(1, 50, 50, 50);
+        GasStation gasStation2 = new GasStation(2, 150, 150, 50);
+        map.addGasStation(gasStation1);
+        map.addGasStation(gasStation2);
 
-    public List<PoliceVehicle> getPoliceVehicles() {
-        return policeVehicles;
-    }
+        // Ajouter un garage à la carte
+        Garage garage = new Garage(1, 250, 250);
+        map.addGarage(garage);
 
-    public List<Coin> getCoins() {
-        return coins;
-    }
+        // Ajouter des bâtiments à la carte
+        Building building1 = new Building(1, 350, 350, 50, 50);
+        Building building2 = new Building(2, 450, 450, 50, 50);
+        map.addBuilding(building1);
+        map.addBuilding(building2);
 
-    public boolean isRunning() {
-        return isRunning;
-    }
+        // Ajouter des voitures de police à la carte
+        PoliceVehicle policeCar1 = new PoliceVehicle(1, 100, 100, 100);
+        PoliceVehicle policeCar2 = new PoliceVehicle(2, 200, 200, 100);
+        map.addPoliceVehicle(policeCar1);
+        map.addPoliceVehicle(policeCar2);
 
-    public void setRunning(boolean running) {
-        isRunning = running;
-    }
-
-    private List<PoliceVehicle> initializePoliceVehicles() {
-        // Initialiser la liste des véhicules de police et les placer sur la carte
-    }
-
-    private List<Coin> initializeCoins() {
-        // Initialiser la liste des pièces et les placer sur la carte
-    }
-
-    // Autres méthodes pour gérer l'état du jeu (par exemple, mettre à jour l'état du joueur, vérifier les conditions de victoire/défaite, etc.)
-
-    public void startGame(int difficulty, String playerName) {
-        // Initialiser le jeu avec le niveau de difficulté et le nom du joueur
-        // Créer une nouvelle instance de Game et la passer au simulateur
-        // Démarrer le simulateur
-    }
-
-    public void stopGame() {
-        // Arrêter le simulateur
-    }
-
-    public void movePlayer(String direction) {
-        // Mettre à jour la position du joueur en fonction de la direction
-        // Vérifier et gérer les collisions avec les bâtiments, les véhicules de police, les pièces, etc.
-    }
-
-    public void refuelAtGasStation() {
-        // Recharger le carburant du véhicule du joueur à une station-service
-        // Déduire le coût du carburant de l'argent du joueur
-    }
-
-    public void buyVehicleAtGarage(int vehicleId) {
-        // Acheter un nouveau véhicule au garage
-        // Déduire le coût du véhicule de l'argent du joueur
-        // Ajouter le véhicule au garage du joueur
-    }
-
-    public void collectCoin(int coinId) {
-        // Ramasser une pièce de monnaie dans le jeu
-        // Ajouter la valeur de la pièce à l'argent du joueur
-        // Supprimer la pièce du jeu
+        // Appeler la méthode start du simulateur pour démarrer le jeu
+        simulator.start();
     }
 }

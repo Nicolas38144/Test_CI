@@ -2,51 +2,61 @@ package org.acme;
 
 public class GasStation {
     private int id;
-    private int xCoordinate;
-    private int yCoordinate;
-    private int pricePerLiter;
+    private int x;
+    private int y;
+    private int width;
+    private int height;
+    private double fuelPrice;
 
-    // Constructors, getters and setters
-
-    public GasStation(int id, int xCoordinate, int yCoordinate, int pricePerLiter) {
+    public GasStation(int id, int x, int y, double fuelPrice) {
         this.id = id;
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
-        this.pricePerLiter = pricePerLiter;
+        this.x = x;
+        this.y = y;
+        this.fuelPrice = fuelPrice;
     }
 
-    public GasStation() {
-    }
-
-    public int getId() {
+    public int getID() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getX() {
+        return x;
     }
 
-    public int getXCoordinate() {
-        return xCoordinate;
+    public int getY() {
+        return y;
     }
 
-    public void setXCoordinate(int xCoordinate) {
-        this.xCoordinate = xCoordinate;
+    public int getWidth() {
+        return width;
     }
 
-   public int getyCoordinate() {
-        return yCoordinate;
+    public void setWidth(int width) {
+        this.width = width;
     }
 
-    public void setYCoordinate(int yCoordinate) {
-        this.yCoordinate = yCoordinate;
+    public int getHeight() {
+        return height;
     }
 
-    public int getPricePerLiter() {
-        return pricePerLiter;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
-    public void setPricePerLiter(int pricePerLiter) {
-        this.pricePerLiter = pricePerLiter;
+    public double getFuelPrice() {
+        return fuelPrice;
+    }
+
+    public void refuel(Player player, Vehicle vehicle) {
+        double fuelCost = vehicle.getFuelCapacity() * fuelPrice;
+        if (player.getMoney() >= fuelCost) {
+            player.spendMoney((int) fuelCost);
+            vehicle.refuel();
+        }
+    }
+
+    public boolean contains(int x, int y) {
+        return (x >= this.x && x < this.x + 2 && y >= this.y && y < this.y + 2);
     }
 }
+

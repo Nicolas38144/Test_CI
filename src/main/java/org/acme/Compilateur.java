@@ -1,10 +1,12 @@
 package org.acme;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Paths;
-
-import java.io.*;
-
-import java.util.logging.*;
+import java.util.logging.Logger;
 
 public class Compilateur {
 
@@ -23,7 +25,8 @@ public class Compilateur {
             package org.acme;
 
             public class Compile {
-                int position = 0;
+                int positionX = 0;
+                int positionY = 0;
 
                 public void move(String direction) {
                     switch (direction) {
@@ -56,7 +59,7 @@ public class Compilateur {
         }
     }
 
-    public static String compileLine(String line, BufferedWriter writer) throws IOException {
+    public static void compileLine(String line, BufferedWriter writer) throws IOException {
         String[] words = line.split(" ");
         String key = words[0];
         String instruction = "";
@@ -65,18 +68,17 @@ public class Compilateur {
                 instruction = "case \"droite\":\npositionX = positionX + 1;\nbreak;\n";
                 break;
             case "gauche":
-                instruction = "case \"reculer\":\npositionX = positionX - 1;\nbreak;\n";
+                instruction = "case \"gauche\":\npositionX = positionX - 1;\nbreak;\n";
                 break;
             case "haut":
-                instruction = "case \"haut\":\npositionY = positionY + 1;\nbreak;\n";
+                instruction = "case \"haut\":\npositionY = positionY - 1;\nbreak;\n";
                 break;
             case "bas":
-                instruction = "case \"bas\":\npositionY = positionY - 1;\nbreak;\n";
+                instruction = "case \"bas\":\npositionY = positionY + 1;\nbreak;\n";
                 break;
             default:
                 break;
         }
         writer.write(instruction);
-        return instruction;
     }
 }

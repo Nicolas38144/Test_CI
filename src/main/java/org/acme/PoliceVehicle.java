@@ -2,7 +2,12 @@ package org.acme;
 
 import java.util.Random;
 
+import java.util.Random;
+
 public class PoliceVehicle {
+
+    static final int WIDTH = 5;
+    static final int HEIGHT = 5;
     private int id;
     private int x;
     private int y;
@@ -17,7 +22,7 @@ public class PoliceVehicle {
         this.random = new Random();
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 
@@ -34,20 +39,22 @@ public class PoliceVehicle {
     }
 
     public void move() {
-        // Déplacer le véhicule de police aléatoirement dans une direction
-        int dx = random.nextInt(3) - 1; // Générer un déplacement horizontal entre -1 et 1
-        int dy = random.nextInt(3) - 1; // Générer un déplacement vertical entre -1 et 1
+        int dx = random.nextInt(speed * 2 + 1) - speed;
+        int dy = random.nextInt(speed * 2 + 1) - speed;
+        x += dx;
+        y += dy;
+    }
 
-        // Normaliser le vecteur de déplacement (assurer que la vitesse maximale est respectée)
-        if (dx != 0 && dy != 0) {
-            dx /= Math.sqrt(2);
-            dy /= Math.sqrt(2);
-        }
+    public int getWidth() {
+        return WIDTH;
+    }
 
-        // Appliquer le déplacement
-        x += dx * speed;
-        y += dy * speed;
+    public int getHeight() {
+        return HEIGHT;
+    }
 
-        // Vérifier et gérer les collisions avec les bords de la carte et les autres objets du jeu
+    public void updatePosition() {
+        move();
     }
 }
+

@@ -1,3 +1,5 @@
 
-×
-java:S1598"This file "Player.java" should be located in "org\acme\model" directory, not in "C:\Users\leopa\Documents\git\Test_CI\src\main\java\org\acme".(±ãƒ¥ûÿÿÿÿ8ªñ”ç1J$e615a3e9-ceb7-4071-bede-1481c3d2ec84
+Ä
+java:S1186E"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ˆÎ¿8ï¿ø›ç1J$77019134-164d-4dc9-872d-192d9c645d2a
+É
+java:S1186I"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Úî‚âùÿÿÿÿ8úı‰œç1J$b4ededfb-0b6a-41f0-9e15-aa7aad5a3e14

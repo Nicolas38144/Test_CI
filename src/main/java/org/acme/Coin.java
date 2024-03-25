@@ -1,80 +1,56 @@
 package org.acme;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import org.acme.Game;
 
 import java.util.List;
 import javax.inject.Inject;
 
 @ApplicationScoped
 public class Coin {
-    private final Game game;
-
     private int id;
-    private int xCoordinate;
-    private int yCoordinate;
+    private int x;
+    private int y;
     private int value;
+    private boolean collected;
 
-    @Inject
-    public Coin(Game game) {
-        this.game = game;
-    }
-
-    public Coin(Game game, int id, int xCoordinate, int yCoordinate, int value) {
-        this.game = game;
+    public Coin(int id, int x, int y, int value) {
         this.id = id;
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
+        this.x = x;
+        this.y = y;
         this.value = value;
+        this.collected = false;
     }
 
-    public List<Coin> getCoins() {
-        // Vous devrez peut-être ajuster ce retour en fonction de la façon dont vous stockez les pièces dans le jeu
-        return game.getCoins();
-    }
-
-    public Coin getCoinById(int coinId) {
-        return getCoins().stream().filter(coin -> coin.getId() == coinId).findFirst().orElse(null);
-    }
-
-    public void collectCoin(int coinId) {
-        Coin coinToCollect = getCoinById(coinId);
-
-        if (coinToCollect != null) {
-            game.getPlayer().setMoney(game.getPlayer().getMoney() + coinToCollect.getValue());
-            game.getCoins().remove(coinToCollect);
-        }
-    }
-
-    public int getId() {
+    public int getID() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getX() {
+        return x;
     }
 
-    public int getxCoordinate() {
-        return xCoordinate;
-    }
-
-    public void setxCoordinate(int xCoordinate) {
-        this.xCoordinate = xCoordinate;
-    }
-
-    public int getyCoordinate() {
-        return yCoordinate;
-    }
-
-    public void setyCoordinate(int yCoordinate) {
-        this.yCoordinate = yCoordinate;
+    public int getY() {
+        return y;
     }
 
     public int getValue() {
         return value;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public boolean isCollected() {
+        return collected;
+    }
+
+    public void collect(Player player) {
+        if (!collected) {
+            collected = true;
+            player.addMoney(value);
+        }
+    }
+
+    public boolean contains(int x, int y) {
+        return (x >= this.x && x < this.x + 2 && y >= this.y && y < this.y + 2);
     }
 }
+
+

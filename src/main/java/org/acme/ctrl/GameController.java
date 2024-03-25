@@ -6,7 +6,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("/game")
-public class VehicleController {
+public class GameController {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
