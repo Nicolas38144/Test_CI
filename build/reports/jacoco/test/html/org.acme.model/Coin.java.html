@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Coin.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">code-with-quarkus</a> &gt; <a href="index.source.html" class="el_package">org.acme.model</a> &gt; <span class="el_source">Coin.java</span></div><h1>Coin.java</h1><pre class="source lang-java linenums">package org.acme.model;
+
+public class Coin {
+    private int id;
+    private int x;
+    private int y;
+    private int value;
+    private boolean collected;
+
+<span class="fc" id="L10">    public Coin(int id, int x, int y, int value) {</span>
+<span class="fc" id="L11">        this.id = id;</span>
+<span class="fc" id="L12">        this.x = x;</span>
+<span class="fc" id="L13">        this.y = y;</span>
+<span class="fc" id="L14">        this.value = value;</span>
+<span class="fc" id="L15">        this.collected = false;</span>
+<span class="fc" id="L16">    }</span>
+
+    public int getID() {
+<span class="nc" id="L19">        return id;</span>
+    }
+
+    public int getX() {
+<span class="nc" id="L23">        return x;</span>
+    }
+
+    public int getY() {
+<span class="nc" id="L27">        return y;</span>
+    }
+
+    public int getValue() {
+<span class="nc" id="L31">        return value;</span>
+    }
+
+    public boolean isCollected() {
+<span class="fc" id="L35">        return collected;</span>
+    }
+
+    public void collect(Player player) {
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if (!collected) {</span>
+<span class="fc" id="L40">            collected = true;</span>
+<span class="fc" id="L41">            player.addMoney(value);</span>
+        }
+<span class="fc" id="L43">    }</span>
+
+    public boolean contains(int x, int y) {
+<span class="nc bnc" id="L46" title="All 8 branches missed.">        return (x &gt;= this.x &amp;&amp; x &lt; this.x + 2 &amp;&amp; y &gt;= this.y &amp;&amp; y &lt; this.y + 2);</span>
+    }
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

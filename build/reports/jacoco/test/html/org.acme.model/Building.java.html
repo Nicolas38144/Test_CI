@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Building.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">code-with-quarkus</a> &gt; <a href="index.source.html" class="el_package">org.acme.model</a> &gt; <span class="el_source">Building.java</span></div><h1>Building.java</h1><pre class="source lang-java linenums">package org.acme.model;
+
+public class Building {
+    private int id;
+    private int x;
+    private int y;
+    private int width;
+    private int height;
+
+<span class="nc" id="L10">    public Building(int id, int x, int y, int width, int height) {</span>
+<span class="nc" id="L11">        this.id = id;</span>
+<span class="nc" id="L12">        this.x = x;</span>
+<span class="nc" id="L13">        this.y = y;</span>
+<span class="nc" id="L14">        this.width = width;</span>
+<span class="nc" id="L15">        this.height = height;</span>
+<span class="nc" id="L16">    }</span>
+
+    public int getID() {
+<span class="nc" id="L19">        return id;</span>
+    }
+
+    public int getX() {
+<span class="nc" id="L23">        return x;</span>
+    }
+
+    public int getY() {
+<span class="nc" id="L27">        return y;</span>
+    }
+
+    public int getWidth() {
+<span class="nc" id="L31">        return width;</span>
+    }
+
+    public int getHeight() {
+<span class="nc" id="L35">        return height;</span>
+    }
+
+    public boolean isColliding(Player player) {
+        // VÃ©rifie si le joueur est en collision avec le bÃ¢timent
+        // Vous devrez remplacer cette logique par votre propre implÃ©mentation
+        // en fonction de la faÃ§on dont vous reprÃ©sentez la position et la taille du joueur et du bÃ¢timent
+<span class="nc" id="L42">        int playerX = player.getVehicle().getX();</span>
+<span class="nc" id="L43">        int playerY = player.getVehicle().getY();</span>
+<span class="nc" id="L44">        int playerWidth = player.getVehicle().getWidth();</span>
+<span class="nc" id="L45">        int playerHeight = player.getVehicle().getHeight();</span>
+
+<span class="nc bnc" id="L47" title="All 8 branches missed.">        return (x &lt; playerX + playerWidth &amp;&amp; x + width &gt; playerX &amp;&amp; y &lt; playerY + playerHeight &amp;&amp; y + height &gt; playerY);</span>
+    }
+
+    public boolean contains(int x, int y) {
+<span class="nc bnc" id="L51" title="All 8 branches missed.">        return (x &gt;= this.x &amp;&amp; x &lt; this.x + width &amp;&amp; y &gt;= this.y &amp;&amp; y &lt; this.y + height);</span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

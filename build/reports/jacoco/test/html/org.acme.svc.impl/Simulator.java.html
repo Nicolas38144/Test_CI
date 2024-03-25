@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Simulator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">code-with-quarkus</a> &gt; <a href="index.source.html" class="el_package">org.acme.svc.impl</a> &gt; <span class="el_source">Simulator.java</span></div><h1>Simulator.java</h1><pre class="source lang-java linenums">package org.acme.svc.impl;
+
+import org.acme.model.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Simulator {
+    private Map map;
+    private Player player;
+    private boolean running;
+    private List&lt;PoliceVehicle&gt; policeVehicles;
+
+<span class="nc" id="L14">    public Simulator(Map map, Player player) {</span>
+<span class="nc" id="L15">        this.map = map;</span>
+<span class="nc" id="L16">        this.player = player;</span>
+<span class="nc" id="L17">        this.running = false;</span>
+<span class="nc" id="L18">        this.policeVehicles = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L19">    }</span>
+
+    public void start() {
+<span class="nc" id="L22">        running = true;</span>
+<span class="nc" id="L23">        gameLoop();</span>
+<span class="nc" id="L24">    }</span>
+
+    public void stop() {
+<span class="nc" id="L27">        running = false;</span>
+<span class="nc" id="L28">    }</span>
+
+    private void gameLoop() {
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        while (running) {</span>
+<span class="nc" id="L32">            update();</span>
+            try {
+<span class="nc" id="L34">                Thread.sleep(100); // Attendre 100 millisecondes entre chaque mise Ã  jour</span>
+<span class="nc" id="L35">            } catch (InterruptedException e) {</span>
+<span class="nc" id="L36">                e.printStackTrace();</span>
+<span class="nc" id="L37">            }</span>
+        }
+<span class="nc" id="L39">    }</span>
+
+    private void update() {
+        // Mettre Ã  jour la position du vÃ©hicule du joueur en fonction des requÃªtes API
+<span class="nc" id="L43">        player.updatePosition();</span>
+
+        // Mettre Ã  jour la position des vÃ©hicules de police en fonction de leur comportement alÃ©atoire
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        for (PoliceVehicle policeVehicle : policeVehicles) {</span>
+<span class="nc" id="L47">            policeVehicle.updatePosition();</span>
+<span class="nc" id="L48">        }</span>
+
+        // VÃ©rifier les collisions entre le vÃ©hicule du joueur et les bÃ¢timents, les piÃ¨ces, les vÃ©hicules de police, etc.
+<span class="nc" id="L51">        checkCollisions();</span>
+
+        // Si le joueur n'a plus de carburant, arrÃªter le jeu
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (player.getVehicle().getFuel() == 0) {</span>
+<span class="nc" id="L55">            stop();</span>
+        }
+<span class="nc" id="L57">    }</span>
+
+    private void checkCollisions() {
+<span class="nc" id="L60">        checkBuildingCollision();</span>
+<span class="nc" id="L61">        checkGasStationCollision();</span>
+<span class="nc" id="L62">        checkGarageCollision();</span>
+<span class="nc" id="L63">        checkCoinCollision();</span>
+<span class="nc" id="L64">        checkPoliceVehicleCollision();</span>
+<span class="nc" id="L65">    }</span>
+
+    private void checkBuildingCollision() {
+<span class="nc" id="L68">        Building building = map.getBuildingAt(player.getVehicle().getX(), player.getVehicle().getY());</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (building != null) {</span>
+<span class="nc" id="L70">            stop();</span>
+        }
+<span class="nc" id="L72">    }</span>
+
+    private void checkGasStationCollision() {
+<span class="nc" id="L75">        GasStation gasStation = map.getGasStationAt(player.getVehicle().getX(), player.getVehicle().getY());</span>
+<span class="nc bnc" id="L76" title="All 4 branches missed.">        if (gasStation != null &amp;&amp; canRefuel(gasStation)) {</span>
+<span class="nc" id="L77">            refuel(gasStation);</span>
+        }
+<span class="nc" id="L79">    }</span>
+
+    private boolean canRefuel(GasStation gasStation) {
+<span class="nc bnc" id="L82" title="All 4 branches missed.">        return player.getMoney() &gt;= gasStation.getFuelPrice() &amp;&amp; player.getVehicle().getFuel() &lt; player.getVehicle().getFuelCapacity();</span>
+    }
+
+    private void refuel(GasStation gasStation) {
+<span class="nc" id="L86">        player.spendMoney(gasStation.getFuelPrice());</span>
+<span class="nc" id="L87">        player.getVehicle().refuel();</span>
+<span class="nc" id="L88">    }</span>
+
+    private void checkGarageCollision() {
+<span class="nc" id="L91">        Garage garage = map.getGarageAt(player.getVehicle().getX(), player.getVehicle().getY());</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">        if (garage != null) {</span>
+<span class="nc" id="L93">            buyAvailableVehicles(garage);</span>
+        }
+<span class="nc" id="L95">    }</span>
+
+    private void buyAvailableVehicles(Garage garage) {
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        for (Vehicle vehicle : garage.getVehicles()) {</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">            if (canBuyVehicle(vehicle)) {</span>
+<span class="nc" id="L100">                player.buyVehicle(vehicle);</span>
+            }
+<span class="nc" id="L102">        }</span>
+<span class="nc" id="L103">    }</span>
+
+    private boolean canBuyVehicle(Vehicle vehicle) {
+<span class="nc bnc" id="L106" title="All 4 branches missed.">        return !player.getGarage().contains(vehicle) &amp;&amp; player.getMoney() &gt;= vehicle.getPrice();</span>
+    }
+
+    private void checkCoinCollision() {
+<span class="nc" id="L110">        Coin coin = map.getCoinAt(player.getVehicle().getX(), player.getVehicle().getY());</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        if (coin != null) {</span>
+<span class="nc" id="L112">            collectCoin(coin);</span>
+        }
+<span class="nc" id="L114">    }</span>
+
+    private void collectCoin(Coin coin) {
+<span class="nc" id="L117">        player.addMoney(coin.getValue());</span>
+<span class="nc" id="L118">        map.removeCoin(coin);</span>
+<span class="nc" id="L119">    }</span>
+
+    private void checkPoliceVehicleCollision() {
+<span class="nc bnc" id="L122" title="All 2 branches missed.">        for (PoliceVehicle policeVehicle : policeVehicles) {</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">            if (player.getVehicle().collidesWith(policeVehicle)) {</span>
+<span class="nc" id="L124">                stop();</span>
+            }
+<span class="nc" id="L126">        }</span>
+<span class="nc" id="L127">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

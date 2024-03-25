@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GasStation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">code-with-quarkus</a> &gt; <a href="index.source.html" class="el_package">org.acme.model</a> &gt; <span class="el_source">GasStation.java</span></div><h1>GasStation.java</h1><pre class="source lang-java linenums">package org.acme.model;
+
+public class GasStation {
+    private int id;
+    private int x;
+    private int y;
+    private int width;
+    private int height;
+    private int fuelPrice;
+
+<span class="nc" id="L11">    public GasStation(int id, int x, int y, int fuelPrice) {</span>
+<span class="nc" id="L12">        this.id = id;</span>
+<span class="nc" id="L13">        this.x = x;</span>
+<span class="nc" id="L14">        this.y = y;</span>
+<span class="nc" id="L15">        this.fuelPrice = fuelPrice;</span>
+<span class="nc" id="L16">    }</span>
+
+    public int getID() {
+<span class="nc" id="L19">        return id;</span>
+    }
+
+    public int getX() {
+<span class="nc" id="L23">        return x;</span>
+    }
+
+    public int getY() {
+<span class="nc" id="L27">        return y;</span>
+    }
+
+    public int getWidth() {
+<span class="nc" id="L31">        return width;</span>
+    }
+
+    public void setWidth(int width) {
+<span class="nc" id="L35">        this.width = width;</span>
+<span class="nc" id="L36">    }</span>
+
+    public int getHeight() {
+<span class="nc" id="L39">        return height;</span>
+    }
+
+    public void setHeight(int height) {
+<span class="nc" id="L43">        this.height = height;</span>
+<span class="nc" id="L44">    }</span>
+
+    public int getFuelPrice() {
+<span class="nc" id="L47">        return fuelPrice;</span>
+    }
+
+    public void refuel(Player player, Vehicle vehicle) {
+<span class="nc" id="L51">        double fuelCost = vehicle.getFuelCapacity() * fuelPrice;</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if (player.getMoney() &gt;= fuelCost) {</span>
+<span class="nc" id="L53">            player.spendMoney((int) fuelCost);</span>
+<span class="nc" id="L54">            vehicle.refuel();</span>
+        }
+<span class="nc" id="L56">    }</span>
+
+    public boolean contains(int x, int y) {
+<span class="nc bnc" id="L59" title="All 8 branches missed.">        return (x &gt;= this.x &amp;&amp; x &lt; this.x + 2 &amp;&amp; y &gt;= this.y &amp;&amp; y &lt; this.y + 2);</span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

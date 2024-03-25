@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PoliceVehicle.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">code-with-quarkus</a> &gt; <a href="index.source.html" class="el_package">org.acme.model</a> &gt; <span class="el_source">PoliceVehicle.java</span></div><h1>PoliceVehicle.java</h1><pre class="source lang-java linenums">package org.acme.model;
+
+import java.util.Random;
+
+import java.util.Random;
+
+public class PoliceVehicle {
+
+    static final int WIDTH = 5;
+    static final int HEIGHT = 5;
+    private int id;
+    private int x;
+    private int y;
+    private int speed;
+    private Random random;
+
+<span class="nc" id="L17">    public PoliceVehicle(int id, int x, int y, int speed) {</span>
+<span class="nc" id="L18">        this.id = id;</span>
+<span class="nc" id="L19">        this.x = x;</span>
+<span class="nc" id="L20">        this.y = y;</span>
+<span class="nc" id="L21">        this.speed = speed;</span>
+<span class="nc" id="L22">        this.random = new Random();</span>
+<span class="nc" id="L23">    }</span>
+
+    public int getID() {
+<span class="nc" id="L26">        return id;</span>
+    }
+
+    public int getX() {
+<span class="nc" id="L30">        return x;</span>
+    }
+
+    public int getY() {
+<span class="nc" id="L34">        return y;</span>
+    }
+
+    public int getSpeed() {
+<span class="nc" id="L38">        return speed;</span>
+    }
+
+    public void move() {
+<span class="nc" id="L42">        int dx = random.nextInt(speed * 2 + 1) - speed;</span>
+<span class="nc" id="L43">        int dy = random.nextInt(speed * 2 + 1) - speed;</span>
+<span class="nc" id="L44">        x += dx;</span>
+<span class="nc" id="L45">        y += dy;</span>
+<span class="nc" id="L46">    }</span>
+
+    public int getWidth() {
+<span class="nc" id="L49">        return WIDTH;</span>
+    }
+
+    public int getHeight() {
+<span class="nc" id="L53">        return HEIGHT;</span>
+    }
+
+    public void updatePosition() {
+<span class="nc" id="L57">        move();</span>
+<span class="nc" id="L58">    }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>
