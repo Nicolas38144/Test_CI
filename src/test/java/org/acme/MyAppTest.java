@@ -1,6 +1,6 @@
 package org.acme;
 
-import org.acme.svc.MyApp;
+import org.acme.app.MyApp;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

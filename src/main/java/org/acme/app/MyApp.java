@@ -1,4 +1,4 @@
-package org.acme.svc;
+package org.acme.app;
 
 import com.sun.tools.javac.Main;
 import io.quarkus.logging.Log;
