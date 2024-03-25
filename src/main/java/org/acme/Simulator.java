@@ -1,8 +1,5 @@
 package org.acme;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.enterprise.inject.Instance;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +9,11 @@ public class Simulator {
     private boolean running;
     private List<PoliceVehicle> policeVehicles;
 
-    public Simulator(Map map, Player player, Instance<PoliceVehicle> policeVehicles) {
+    public Simulator(Map map, Player player) {
         this.map = map;
         this.player = player;
         this.running = false;
         this.policeVehicles = new ArrayList<>();
-        policeVehicles.forEach(this::addPoliceVehicle);
     }
 
     public void start() {
@@ -52,39 +48,78 @@ public class Simulator {
         // Vérifier les collisions entre le véhicule du joueur et les bâtiments, les pièces, les véhicules de police, etc.
         checkCollisions();
 
-        // Mettre à jour l'interface utilisateur pour refléter l'état actuel du jeu
-        // ...
+        // Si le joueur n'a plus de carburant, arrêter le jeu
+        if (player.getVehicle().getFuel() == 0) {
+            stop();
+        }
     }
 
     private void checkCollisions() {
-        // Vérifier les collisions avec les bâtiments
+        checkBuildingCollision();
+        checkGasStationCollision();
+        checkGarageCollision();
+        checkCoinCollision();
+        checkPoliceVehicleCollision();
+    }
+
+    private void checkBuildingCollision() {
         Building building = map.getBuildingAt(player.getVehicle().getX(), player.getVehicle().getY());
         if (building != null) {
-            // Gérer la collision avec le bâtiment
+            stop();
         }
+    }
 
-        // Vérifier les collisions avec les stations-service
+    private void checkGasStationCollision() {
         GasStation gasStation = map.getGasStationAt(player.getVehicle().getX(), player.getVehicle().getY());
-        if (gasStation != null) {
-            // Gérer la collision avec la station-service
+        if (gasStation != null && canRefuel(gasStation)) {
+            refuel(gasStation);
         }
+    }
 
-        // Vérifier les collisions avec les garages
+    private boolean canRefuel(GasStation gasStation) {
+        return player.getMoney() >= gasStation.getFuelPrice() && player.getVehicle().getFuel() < player.getVehicle().getFuelCapacity();
+    }
+
+    private void refuel(GasStation gasStation) {
+        player.spendMoney(gasStation.getFuelPrice());
+        player.getVehicle().refuel();
+    }
+
+    private void checkGarageCollision() {
         Garage garage = map.getGarageAt(player.getVehicle().getX(), player.getVehicle().getY());
         if (garage != null) {
-            // Gérer la collision avec le garage
+            buyAvailableVehicles(garage);
         }
+    }
 
-        // Vérifier les collisions avec les pièces
+    private void buyAvailableVehicles(Garage garage) {
+        for (Vehicle vehicle : garage.getVehicles()) {
+            if (canBuyVehicle(vehicle)) {
+                player.buyVehicle(vehicle);
+            }
+        }
+    }
+
+    private boolean canBuyVehicle(Vehicle vehicle) {
+        return !player.getGarage().contains(vehicle) && player.getMoney() >= vehicle.getPrice();
+    }
+
+    private void checkCoinCollision() {
         Coin coin = map.getCoinAt(player.getVehicle().getX(), player.getVehicle().getY());
         if (coin != null) {
-            // Gérer la collision avec la pièce
+            collectCoin(coin);
         }
+    }
 
-        // Vérifier les collisions avec les véhicules de police
+    private void collectCoin(Coin coin) {
+        player.addMoney(coin.getValue());
+        map.removeCoin(coin);
+    }
+
+    private void checkPoliceVehicleCollision() {
         for (PoliceVehicle policeVehicle : policeVehicles) {
             if (player.getVehicle().collidesWith(policeVehicle)) {
-                // Gérer la collision avec le véhicule de police
+                stop();
             }
         }
     }

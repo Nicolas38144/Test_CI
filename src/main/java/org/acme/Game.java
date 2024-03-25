@@ -1,3 +1,5 @@
+package org.acme;
+
 import org.acme.*;
 
 import java.util.ArrayList;
@@ -17,6 +19,9 @@ public class Game {
 
         // Initialiser les véhicules
         initializeVehicles();
+    }
+
+    public static Game getInstance() {
     }
 
     private void initializeVehicles() {
@@ -66,5 +71,24 @@ public class Game {
 
         // Appeler la méthode start du simulateur pour démarrer le jeu
         simulator.start();
+    }
+
+    public String toJSON() {
+        // Générer une chaîne JSON contenant les informations du joueur
+        StringBuilder json = new StringBuilder();
+        json.append("{\n");
+        json.append("  \"player\": {\n");
+        json.append("    \"id\": ").append(player.getID()).append(",\n");
+        json.append("    \"money\": ").append(player.getMoney()).append(",\n");
+        json.append("    \"vehicle\": ").append(player.getVehicle().toJSON()).append(",\n");
+        json.append("    \"garage\": [\n");
+        for (Vehicle vehicle : player.getGarage()) {
+            json.append("      ").append(vehicle.toJSON()).append(",\n");
+        }
+        json.append("    ]\n");
+        json.append("  }\n");
+        json.append("}\n");
+
+        return json.toString();
     }
 }

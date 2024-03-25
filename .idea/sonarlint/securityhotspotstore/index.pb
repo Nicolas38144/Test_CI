@@ -37,3 +37,13 @@ Y
 )src/main/java/org/acme/PoliceVehicle.java,d\1\d1a0ee548364507f94168ad487b8d5bbb27d0c71
 _
 /src/main/java/org/acme/ctrl/GameController.java,1\4\148f6f11c1c557c3b04f0cdd2a230d61c580db90
+b
+2src/main/java/org/acme/ctrl/VehicleController.java,b\1\b179355ca990a28f42af65d5dd0d77900cfd8030
+]
+-src/main/java/org/acme/GameStateProducer.java,6\9\691baa1f4b363d1c2dfbb88cdcc91480b23ac2a3
+W
+'src/main/java/org/acme/MQTTManager.java,5\3\536c726fd6fa52bad2f8116d6bca18a3dc5a189c
+W
+'src/main/java/org/acme/Calculation.java,d\a\daaecc7855a7e8b6b8b262b4adf135007fb06984
+W
+'src/main/java/org/acme/MQTTService.java,9\4\940ecb3997f032eda859401633ad0b42804d2111

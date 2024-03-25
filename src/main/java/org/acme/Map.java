@@ -77,4 +77,8 @@ public class Map {
     public void addPoliceVehicle(PoliceVehicle policeVehicle) {
         policeVehicles.add(policeVehicle);
     }
+
+    public void removeCoin(Coin coin) {
+        coins.remove(coin);
+    }
 }

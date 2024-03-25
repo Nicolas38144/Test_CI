@@ -3,7 +3,7 @@ package org.acme;
 import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class Vehicle {
@@ -91,6 +91,10 @@ public class Vehicle {
         int policeHeight = policeVehicle.getHeight();
 
         return (x < policeX + policeWidth && x + width > policeX && y < policeY + policeHeight && y + height > policeY);
+    }
+
+    public boolean toJSON() {
+        return true;
     }
 }
 

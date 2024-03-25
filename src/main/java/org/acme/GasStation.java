@@ -43,7 +43,7 @@ public class GasStation {
         this.height = height;
     }
 
-    public double getFuelPrice() {
+    public int getFuelPrice() {
         return fuelPrice;
     }
 

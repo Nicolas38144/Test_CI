@@ -1,14 +1,8 @@
 package org.acme;
 
-import org.acme.Vehicle;
-
 import java.util.List;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Garage {
     private int id;

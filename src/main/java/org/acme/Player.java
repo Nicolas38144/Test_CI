@@ -1,7 +1,7 @@
 package org.acme;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 

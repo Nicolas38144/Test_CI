@@ -3,7 +3,7 @@ package org.acme;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class Coin {
