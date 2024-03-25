@@ -1,0 +1,22 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+code-with-quarkus,org.acme.compil,Calculation,3,0,0,0,1,0,1,0,1,0
+code-with-quarkus,org.acme.compil,Compilateur,115,0,5,0,38,0,8,0,4,0
+code-with-quarkus,org.acme.svc.impl,MQTTServiceImpl,3,0,0,0,1,0,1,0,1,0
+code-with-quarkus,org.acme.svc.impl,MQTTService,62,0,0,0,19,0,2,0,2,0
+code-with-quarkus,org.acme.svc.impl,GameServiceImpl,3,0,0,0,1,0,1,0,1,0
+code-with-quarkus,org.acme.svc.impl,MQTTService.new TimerTask() {...},10,0,0,0,3,0,2,0,2,0
+code-with-quarkus,org.acme.svc.impl,Simulator,250,0,32,0,66,0,32,0,16,0
+code-with-quarkus,org.acme.svc.impl,Map,189,0,16,0,44,0,20,0,12,0
+code-with-quarkus,org.acme.svc.impl,VehiculeServiceImpl,3,0,0,0,1,0,1,0,1,0
+code-with-quarkus,org.acme.svc.impl,Game,280,0,4,0,51,0,8,0,6,0
+code-with-quarkus,org.acme.ctrl,VehiculeController,3,0,0,0,1,0,1,0,1,0
+code-with-quarkus,org.acme.ctrl,GameController,3,0,0,0,1,0,1,0,1,0
+code-with-quarkus,org.acme.app,Main,6,0,0,0,2,0,2,0,2,0
+code-with-quarkus,org.acme.app,MyApp,46,0,4,0,12,0,7,0,5,0
+code-with-quarkus,org.acme.model,Player,69,18,2,0,23,6,12,3,11,3
+code-with-quarkus,org.acme.model,Vehicle,139,0,8,0,40,0,24,0,20,0
+code-with-quarkus,org.acme.model,Building,105,0,16,0,18,0,16,0,8,0
+code-with-quarkus,org.acme.model,PoliceVehicle,78,0,0,0,20,0,9,0,9,0
+code-with-quarkus,org.acme.model,Garage,97,0,10,0,28,0,17,0,12,0
+code-with-quarkus,org.acme.model,GasStation,85,0,10,0,22,0,16,0,11,0
+code-with-quarkus,org.acme.model,Coin,36,32,9,1,5,12,10,3,5,3

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Game.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">code-with-quarkus</a> &gt; <a href="index.source.html" class="el_package">org.acme.svc.impl</a> &gt; <span class="el_source">Game.java</span></div><h1>Game.java</h1><pre class="source lang-java linenums">package org.acme.svc.impl;
+
+import org.acme.model.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Game {
+    private Map map;
+    private Player player;
+    private Simulator simulator;
+    private List&lt;Vehicle&gt; availableCars;
+
+    private static Game instance;
+
+<span class="nc" id="L16">    public Game() {</span>
+<span class="nc" id="L17">        map = new Map();</span>
+<span class="nc" id="L18">        player = new Player(1, new Vehicle(1, 0, 0, 50, 50, 50), 100);</span>
+<span class="nc" id="L19">        simulator = new Simulator(map, player);</span>
+<span class="nc" id="L20">        initializeVehicles();</span>
+<span class="nc" id="L21">    }</span>
+
+    public static Game getInstance() {
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        if (instance == null) {</span>
+<span class="nc" id="L25">            instance = new Game();</span>
+        }
+<span class="nc" id="L27">        return instance;</span>
+    }
+
+    private void initializeVehicles() {
+        // CrÃ©er les trois vÃ©hicules
+<span class="nc" id="L32">        Vehicle basicCar = new Vehicle(1, 0, 0, 50, 50, 50);</span>
+<span class="nc" id="L33">        basicCar.setPrice(10);</span>
+<span class="nc" id="L34">        Vehicle mediumCar = new Vehicle(2, 0, 0, 75, 75, 100);</span>
+<span class="nc" id="L35">        mediumCar.setPrice(20);</span>
+<span class="nc" id="L36">        Vehicle premiumCar = new Vehicle(3, 0, 0, 100, 100, 200);</span>
+<span class="nc" id="L37">        premiumCar.setPrice(30);</span>
+
+        // Ajouter la voiture de base au garage du joueur
+<span class="nc" id="L40">        player.getGarage().add(basicCar);</span>
+
+        // Ajouter les deux autres voitures Ã  la liste de voitures disponibles Ã  l'achat
+<span class="nc" id="L43">        availableCars = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L44">        availableCars.add(mediumCar);</span>
+<span class="nc" id="L45">        availableCars.add(premiumCar);</span>
+<span class="nc" id="L46">    }</span>
+
+    public List&lt;Vehicle&gt; getAvailableCars() {
+<span class="nc" id="L49">        return availableCars;</span>
+    }
+
+    public void start() {
+        // Ajouter des stations-service Ã  la carte
+<span class="nc" id="L54">        GasStation gasStation1 = new GasStation(1, 50, 50, 50);</span>
+<span class="nc" id="L55">        GasStation gasStation2 = new GasStation(2, 150, 150, 50);</span>
+<span class="nc" id="L56">        map.addGasStation(gasStation1);</span>
+<span class="nc" id="L57">        map.addGasStation(gasStation2);</span>
+
+        // Ajouter un garage Ã  la carte
+<span class="nc" id="L60">        Garage garage = new Garage(1, 250, 250);</span>
+<span class="nc" id="L61">        map.addGarage(garage);</span>
+
+        // Ajouter des bÃ¢timents Ã  la carte
+<span class="nc" id="L64">        Building building1 = new Building(1, 350, 350, 50, 50);</span>
+<span class="nc" id="L65">        Building building2 = new Building(2, 450, 450, 50, 50);</span>
+<span class="nc" id="L66">        map.addBuilding(building1);</span>
+<span class="nc" id="L67">        map.addBuilding(building2);</span>
+
+        // Ajouter des voitures de police Ã  la carte
+<span class="nc" id="L70">        PoliceVehicle policeCar1 = new PoliceVehicle(1, 100, 100, 100);</span>
+<span class="nc" id="L71">        PoliceVehicle policeCar2 = new PoliceVehicle(2, 200, 200, 100);</span>
+<span class="nc" id="L72">        map.addPoliceVehicle(policeCar1);</span>
+<span class="nc" id="L73">        map.addPoliceVehicle(policeCar2);</span>
+
+        // Appeler la mÃ©thode start du simulateur pour dÃ©marrer le jeu
+<span class="nc" id="L76">        simulator.start();</span>
+<span class="nc" id="L77">    }</span>
+
+    public String toJSON() {
+        // GÃ©nÃ©rer une chaÃ®ne JSON contenant les informations du joueur
+<span class="nc" id="L81">        StringBuilder json = new StringBuilder();</span>
+<span class="nc" id="L82">        json.append(&quot;{\n&quot;);</span>
+<span class="nc" id="L83">        json.append(&quot;  \&quot;player\&quot;: {\n&quot;);</span>
+<span class="nc" id="L84">        json.append(&quot;    \&quot;id\&quot;: &quot;).append(player.getID()).append(&quot;,\n&quot;);</span>
+<span class="nc" id="L85">        json.append(&quot;    \&quot;money\&quot;: &quot;).append(player.getMoney()).append(&quot;,\n&quot;);</span>
+<span class="nc" id="L86">        json.append(&quot;    \&quot;vehicle\&quot;: &quot;).append(player.getVehicle().toString()).append(&quot;,\n&quot;);</span>
+<span class="nc" id="L87">        json.append(&quot;    \&quot;garage\&quot;: [\n&quot;);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        for (Vehicle vehicle : player.getGarage()) {</span>
+<span class="nc" id="L89">            json.append(&quot;      &quot;).append(vehicle.toString()).append(&quot;,\n&quot;);</span>
+<span class="nc" id="L90">        }</span>
+<span class="nc" id="L91">        json.append(&quot;    ]\n&quot;);</span>
+<span class="nc" id="L92">        json.append(&quot;  }\n&quot;);</span>
+<span class="nc" id="L93">        json.append(&quot;}\n&quot;);</span>
+
+<span class="nc" id="L95">        return json.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>
