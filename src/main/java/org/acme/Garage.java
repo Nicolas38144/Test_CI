@@ -57,7 +57,7 @@ public class Garage {
 
     public boolean buyVehicle(Player player, int vehicleID) {
         for (Vehicle vehicle : vehicles) {
-            if (vehicle.getID() == vehicleID) {
+            if (player.getVehicle().getId() == vehicleID) {
                 if (player.getMoney() >= vehicle.getPrice()) {
                     player.buyVehicle(vehicle);
                     vehicles.remove(vehicle);

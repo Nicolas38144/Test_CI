@@ -11,17 +11,20 @@ public class Game {
     private Simulator simulator;
     private List<Vehicle> availableCars;
 
-    public Game() {
-        // Créer la carte, le joueur et le simulateur
-        map = new Map();
-        player = new Player();
-        simulator = new Simulator(map, player);
+    private static Game instance;
 
-        // Initialiser les véhicules
+    public Game() {
+        map = new Map();
+        player = new Player(1, new Vehicle(1, 0, 0, 50, 50, 50), 100);
+        simulator = new Simulator(map, player);
         initializeVehicles();
     }
 
     public static Game getInstance() {
+        if (instance == null) {
+            instance = new Game();
+        }
+        return instance;
     }
 
     private void initializeVehicles() {
@@ -80,10 +83,10 @@ public class Game {
         json.append("  \"player\": {\n");
         json.append("    \"id\": ").append(player.getID()).append(",\n");
         json.append("    \"money\": ").append(player.getMoney()).append(",\n");
-        json.append("    \"vehicle\": ").append(player.getVehicle().toJSON()).append(",\n");
+        json.append("    \"vehicle\": ").append(player.getVehicle().toString()).append(",\n");
         json.append("    \"garage\": [\n");
         for (Vehicle vehicle : player.getGarage()) {
-            json.append("      ").append(vehicle.toJSON()).append(",\n");
+            json.append("      ").append(vehicle.toString()).append(",\n");
         }
         json.append("    ]\n");
         json.append("  }\n");

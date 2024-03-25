@@ -11,8 +11,6 @@ W
 'src/main/java/org/acme/Compilateur.java,6\1\61344571a6d34d909b6fe4790e132659550b42f0
 Y
 )src/main/java/org/acme/compile.vroumvroum,9\7\97ff441f49052e126db41929d194b67b767af596
-^
-.src/main/java/org/acme/dto/MoveVehicleDTO.java,5\9\5978ab9e9deac82899d2a03e1279757f7188b2f5
 P
  src/main/java/org/acme/Main.java,0\5\052ad09242f03c706932c5e3e61b28c7ddbe5c78
 P
@@ -37,12 +35,6 @@ Y
 )src/main/java/org/acme/PoliceVehicle.java,d\1\d1a0ee548364507f94168ad487b8d5bbb27d0c71
 _
 /src/main/java/org/acme/ctrl/GameController.java,1\4\148f6f11c1c557c3b04f0cdd2a230d61c580db90
-b
-2src/main/java/org/acme/ctrl/VehicleController.java,b\1\b179355ca990a28f42af65d5dd0d77900cfd8030
-]
--src/main/java/org/acme/GameStateProducer.java,6\9\691baa1f4b363d1c2dfbb88cdcc91480b23ac2a3
-W
-'src/main/java/org/acme/MQTTManager.java,5\3\536c726fd6fa52bad2f8116d6bca18a3dc5a189c
 W
 'src/main/java/org/acme/Calculation.java,d\a\daaecc7855a7e8b6b8b262b4adf135007fb06984
 W

@@ -36,6 +36,15 @@ public class Map {
         coins.add(coin);
     }
 
+    //TO DO: Add a method to init the coins on the map
+    public void initCoins() {
+        addCoin(new Coin(1, 50, 50, 10));
+        addCoin(new Coin(2, 150, 150, 10));
+        addCoin(new Coin(3, 250, 250, 10));
+        addCoin(new Coin(4, 350, 350, 10));
+        addCoin(new Coin(5, 450, 450, 10));
+    }
+
 
 
     public Building getBuildingAt(int x, int y) {

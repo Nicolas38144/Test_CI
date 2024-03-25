@@ -1,11 +1,5 @@
 package org.acme;
 
-import jakarta.enterprise.context.ApplicationScoped;
-
-import java.util.List;
-import jakarta.inject.Inject;
-
-@ApplicationScoped
 public class Coin {
     private int id;
     private int x;

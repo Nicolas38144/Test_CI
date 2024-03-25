@@ -6,9 +6,9 @@ public class GasStation {
     private int y;
     private int width;
     private int height;
-    private double fuelPrice;
+    private int fuelPrice;
 
-    public GasStation(int id, int x, int y, double fuelPrice) {
+    public GasStation(int id, int x, int y, int fuelPrice) {
         this.id = id;
         this.x = x;
         this.y = y;
